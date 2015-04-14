@@ -17,15 +17,18 @@ However, you can modify the post types it applies to, the media button label and
 
 
 ```
-	function prefix_filter_attachments_only_options( $defaults ) {
+	function prefix_filter_attachments_only_options( $options ) {
+
 		// Add a custom post type.
-		$defaults['post_types'][] = 'my_custom_post_type'; 
+		$options['post_types'][] = 'my_custom_post_type';
 		// Change the button label.
-		$defaults['media_button_label'] = __( 'My cool button label', 'my-text-domain' );
+		$options['media_button_label'] = __( 'My cool button label', 'my-text-domain' );
 		// Change the view title.
-		$defaults['media_button_title'] = __( 'My cool title', 'my-text-domain' ); 
+		$options['media_button_title'] = __( 'My cool title', 'my-text-domain' );
+
+		return $options;
 	}
-	
+
 	add_filter( 'attachments_only_options', 'prefix_filter_attachments_only_options', 0, 1 );
 ```
 
