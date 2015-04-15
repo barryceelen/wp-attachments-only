@@ -12,7 +12,7 @@
  * Plugin Name:       Attachments Only
  * Plugin URI:        https://github.com/barryceelen/wp-attachments-only
  * Description:       Simplify the default WordPress media view by removing all functionality except adding and deleting attachments.
- * Version:           0.0.1
+ * Version:           0.0.2
  * Author:            Barry Ceelen
  * Author URI:        https://github.com/barryceelen
  * Text Domain:       attachments-only
@@ -29,5 +29,5 @@ if ( ! defined( 'WPINC' ) ) {
 
 if ( is_admin() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) ) {
 	require_once( plugin_dir_path( __FILE__ ) . 'class-attachments-only.php' );
-	add_action( 'plugins_loaded', array( 'Attachments_Only', 'get_instance' ) );
+	add_action( 'init', array( 'Attachments_Only', 'get_instance' ) );
 }
