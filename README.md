@@ -22,14 +22,14 @@ However, you can modify the post types it applies to, the media button label and
 		// Add a custom post type.
 		$options['post_types'][] = 'my_custom_post_type';
 		// Change the button label.
-		$options['media_button_label'] = __( 'My cool button label', 'my-text-domain' );
+		$options['media_button_label'] = __( 'My Cool Button Label', 'my-text-domain' );
 		// Change the view title.
-		$options['media_button_title'] = __( 'My cool title', 'my-text-domain' );
+		$options['media_library_title'] = __( 'My Cool Title', 'my-text-domain' );
 
 		return $options;
 	}
 
-	add_filter( 'attachments_only_options', 'prefix_filter_attachments_only_options', 0, 1 );
+	add_filter( 'attachments_only_options', 'prefix_filter_attachments_only_options' );
 ```
 
 ## Pull requests
