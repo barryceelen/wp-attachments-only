@@ -140,10 +140,14 @@ class Attachments_Only {
 	 * @return array
 	 */
 	public function filter_media_view_strings( $strings ) {
-		global $post;
-		if ( in_array( $post->post_type, $this->options['post_types'] ) ) {
-			$strings['mediaLibraryTitle'] = $this->options['media_library_title'];
+		global $post, $pagenow;
+		if ( ! in_array( $pagenow, array( 'post.php','post-new.php' ) ) ) {
+			return $strings;
 		}
+		if ( ! in_array( $post->post_type, $this->options['post_types'] ) ) {
+			return $strings;
+		}
+		$strings['mediaLibraryTitle'] = $this->options['media_library_title'];
 		return $strings;
 	}
 
