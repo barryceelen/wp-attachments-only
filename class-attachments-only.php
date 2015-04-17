@@ -67,6 +67,10 @@ class Attachments_Only {
 
 		// Until this plugin properly supports setting a featured image, selectively remove support for post thumbnails.
 		add_action( 'after_setup_theme', array( $this, 'remove_post_thumbnails_support'), 99 );
+
+		// Until this plugin replaces the default behaviour, prevent uploading files by
+		// dragging them on to the editor by hiding .uploader-editor.
+		add_action( 'admin_footer', array( $this, 'hide_uploader_editor' ) );
 	}
 
 	/**
@@ -213,5 +217,24 @@ class Attachments_Only {
 
 		add_theme_support( 'post-thumbnails', $r );
 
+	}
+
+	/**
+	 * Prevent uploading files by dragging them on the post editor.
+	 *
+	 * @todo Open our own media view in stead of preventing to open the default one by this silly hack.
+	 *
+	 * @since 0.0.2
+	 * @return null
+	 */
+	public function hide_uploader_editor() {
+		global $post, $pagenow;
+		if ( ! in_array( $pagenow, array( 'post.php','post-new.php' ) ) ) {
+			return;
+		}
+		if ( ! in_array( $post->post_type, $this->options['post_types'] ) ) {
+			return;
+		}
+		echo '<style>.uploader-editor { display: none !important;  }</style>';
 	}
 }
