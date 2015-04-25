@@ -7,7 +7,6 @@ Sometimes you don’t need all the bells and whistles of the WordPress attachmen
 
 The plugin in its current state is, due to my lack of experience with the subject matter, a bit of a hack and could use some improvement:
 
-- Currently does not support (or even allow) setting a featured image, this definitely needs fixing.
 - Currently disables uploading attachments by dragging them onto the tinymce editor.
 - As the default media viewer is replaced, any plugins extending that will not work.
 - Ideally a future version would optionally allow all other default actions like inserting media and galleries, except when using unattached media files.
@@ -33,6 +32,3 @@ However, you can modify the post types it applies to, the media button label and
 	add_filter( 'attachments_only_options', 'prefix_filter_attachments_only_options' );
 ```
 
-## Pull requests
-
-Pull requests are very welcome, please use the `dev` branch.

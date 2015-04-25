@@ -1,46 +1,105 @@
 (function ($) {
-	var AttachmentsOnly = {
+	var attachmentsOnly = {
+		buttonID: '#insert-media-button-attachments-only',
 		init: function() {
-			this.setupEventHandlers();
+			var _this = this;
+			$(document.body).on( 'click.attachmentsOnly', this.buttonID, function() {
+				_this.openMediaFrame();
+			});
+			$('#postimagediv').off( 'click', '#set-post-thumbnail' ).on( 'click.attachmentsOnly', '#set-post-thumbnail', function( event ) {
+					event.preventDefault();
+					event.stopPropagation();
+					// Todo: Select current featured image in library...
+					_this.openMediaFrame();
+			});
 		},
-		openMediaFrame: function() {
-			var mediaFrame;
-			if ( mediaFrame ) {
-				mediaFrame.open();
+		openMediaFrame: function( state ) {
+
+			if ( this.frame ) {
+				this.frame.open();
 				return;
 			}
 
 			var states = [
 				new wp.media.controller.Library( {
 					date: false,
-					// Attachments display settings (Alignment, size etc.), false by default but leaving this for future reference:
+					// Attachments display settings (Alignment, size etc.),
+					// false by default, I'm adding this here for future reference:
 					displaySettings: false,
 					filterable: false,
+					id: 'library',
 					searchable: true,
 					title: attachmentsOnlyVars.media_library_title,
-					toolbar: '', // Todo: Do something useful with the toolbar.
+					toolbar: 'generic',
 					library:  wp.media.query( {
 						uploadedTo: wp.media.view.settings.post.id,
-						orderby : 'menuOrder',
+						orderby: 'menuOrder',
 						order: 'ASC',
 					} ),
 					priority: 10
-				} )
+				} ),
+				new wp.media.controller.EditImage()
 			];
 
-			mediaFrame = wp.media.frames.mediaFrame = wp.media({
+			if ( wp.media.view.settings.post.featuredImageId ) {
+				states.push( new wp.media.controller.FeaturedImage( {
+					date: false,
+					filterable: false,
+					id: 'featured-image',
+					searchable: true,
+					library:  wp.media.query( {
+						uploadedTo: wp.media.view.settings.post.id,
+						type: 'image'
+					} ),
+					priority: 20
+				} ) );
+			}
+
+			this.frame = wp.media.frames.attachmentsOnly = wp.media({
 				states: states
 			});
 
-			mediaFrame.open();
+			this.frame.on( 'toolbar:create:generic', this.genericToolbar, this.frame );
+			this.frame.on( 'toolbar:create:featured-image', this.featuredImageToolbar, this.frame );
+			this.frame.on( 'content:render:edit-image', this.editImage, this.frame );
+
+			this.frame.state( 'featured-image' ).on( 'select', function() {
+				var selection = this.get( 'selection' ).first();
+				wp.media.featuredImage.set( selection.id );
+			} );
+
+			this.frame.open();
+
 		},
-		setupEventHandlers: function() {
-			var _this = this;
-			$(document.body).on( 'click', '#insert-media-button-attachments-only', function(e){
-				e.preventDefault();
-				_this.openMediaFrame();
+		editImage: function() {
+			var selection = this.state('library').get('selection');
+			var view = new wp.media.view.EditImage( { model: selection.single(), controller: this } ).render();
+
+			this.content.set( view );
+
+			// after bringing in the frame, load the actual editor via an ajax call
+			view.loadEditor();
+		},
+		featuredImageToolbar: function( toolbar ) {
+			this.createSelectToolbar( toolbar, {
+				text:  wp.media.view.l10n.setFeaturedImage,
+				// Todo: Copypasted, what does the state do to the toolbar?
+				state: this.options.state || 'upload'
+			});
+		},
+		/*
+		 * Haven't reviewed the code to see if it is possible to get rid of the button.
+		 * Short of defining my own view, I'll just use a generic 'Done' button.
+		 */
+		genericToolbar: function( toolbar ) {
+			this.createSelectToolbar( toolbar, {
+				text:  'Done',
+				// Todo: Copypasted, what does the state do to the toolbar?
+				state: this.options.state || 'upload'
 			});
 		}
 	}
-	AttachmentsOnly.init();
+	$(document).ready( function() {
+		attachmentsOnly.init();
+	});
 }(jQuery));

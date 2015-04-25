@@ -65,9 +65,6 @@ class Attachments_Only {
 		// Enqueue JavaScript.
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
-		// Until this plugin properly supports setting a featured image, selectively remove support for post thumbnails.
-		add_action( 'after_setup_theme', array( $this, 'remove_post_thumbnails_support'), 99 );
-
 		// Until this plugin replaces the default behaviour, prevent uploading files by
 		// dragging them on to the editor by hiding .uploader-editor.
 		add_action( 'admin_footer', array( $this, 'hide_uploader_editor' ) );
@@ -193,34 +190,6 @@ class Attachments_Only {
 				'media_library_tab_title' => $this->options['media_library_tab_title'], // Unused, for future reference.
 			)
 		);
-	}
-
-	/**
-	 * Selectively remove support for post-thumbnails.
-	 *
-	 * Note: This is meant as a temporary measure.
-	 *
-	 * @todo Remove when this plugin supports featured images.
-	 *
-	 * @since 0.0.1
-	 *
-	 * @return null
-	 */
-	public function remove_post_thumbnails_support() {
-
-		remove_theme_support( 'post-thumbnails' );
-
-		$post_types = get_post_types( array() );
-		$r = array();
-
-		foreach ( $post_types as $post_type ) {
-			if ( post_type_supports( $post_type, 'thumbnail' ) && ! in_array( $post_type, $this->options['post_types'] ) ) {
-				$r[] = $post_type;
-			}
-		}
-
-		add_theme_support( 'post-thumbnails', $r );
-
 	}
 
 	/**
