@@ -9,11 +9,12 @@
 			$('#postimagediv').off( 'click', '#set-post-thumbnail' ).on( 'click.attachmentsOnly', '#set-post-thumbnail', function( event ) {
 					event.preventDefault();
 					event.stopPropagation();
-					// Todo: Select current featured image in library...
-					_this.openMediaFrame();
+					_this.openMediaFrame( 'featured-image' );
 			});
 		},
 		openMediaFrame: function( state ) {
+
+			state = state || 'library';
 
 			if ( this.frame ) {
 				this.frame.open();
@@ -23,13 +24,9 @@
 			var states = [
 				new wp.media.controller.Library( {
 					date: false,
-					// Attachments display settings (Alignment, size etc.),
-					// false by default, I'm adding this here for future reference:
-					displaySettings: false,
 					filterable: false,
 					id: 'library',
 					searchable: true,
-					title: attachmentsOnlyVars.media_library_title,
 					toolbar: 'generic',
 					library:  wp.media.query( {
 						uploadedTo: wp.media.view.settings.post.id,
@@ -66,14 +63,17 @@
 			this.frame.state( 'featured-image' ).on( 'select', function() {
 				var selection = this.get( 'selection' ).first();
 				wp.media.featuredImage.set( selection.id );
-			} );
+			});
+
+			// Todo: how to change the state back and forth depending on which button triggered it?
+			this.frame.options.state = state;
 
 			this.frame.open();
 
 		},
 		editImage: function() {
-			var selection = this.state('library').get('selection');
-			var view = new wp.media.view.EditImage( { model: selection.single(), controller: this } ).render();
+			var selection = this.state('library').get('selection'),
+				view = new wp.media.view.EditImage( { model: selection.single(), controller: this } ).render();
 
 			this.content.set( view );
 
@@ -82,20 +82,16 @@
 		},
 		featuredImageToolbar: function( toolbar ) {
 			this.createSelectToolbar( toolbar, {
-				text:  wp.media.view.l10n.setFeaturedImage,
-				// Todo: Copypasted, what does the state do to the toolbar?
-				state: this.options.state || 'upload'
+				text: wp.media.view.l10n.setFeaturedImage
 			});
 		},
 		/*
-		 * Haven't reviewed the code to see if it is possible to get rid of the button.
-		 * Short of defining my own view, I'll just use a generic 'Done' button.
-		 */
+		Haven't reviewed the code to see if it is possible to get rid of the button.
+		Short of defining my own view, I'll just use a generic 'Done' button.
+		*/
 		genericToolbar: function( toolbar ) {
 			this.createSelectToolbar( toolbar, {
-				text:  'Done',
-				// Todo: Copypasted, what does the state do to the toolbar?
-				state: this.options.state || 'upload'
+				text: wp.media.view.l10n.done
 			});
 		}
 	}

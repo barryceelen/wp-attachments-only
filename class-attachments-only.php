@@ -46,6 +46,7 @@ class Attachments_Only {
 			'media_button_label' => esc_html__( 'Attachments', 'attachments-only' ),
 			'media_library_title' => esc_html__( 'Attachments', 'attachments-only' ),
 			'media_library_tab_title' => esc_html__( 'Attachments', 'attachments-only' ),
+			'media_library_button_title' => esc_html__( 'Done', 'attachments-only' ),
 		);
 
 		$this->options = apply_filters( 'attachments_only_options', $defaults );
@@ -129,11 +130,9 @@ class Attachments_Only {
 	}
 
 	/**
-	 * Rename default media view strings.
+	 * Filter default media view strings.
 	 *
-	 * Renames the library state title and tab.
-	 *
-	 * @todo Set media library tab title via JavaScript in attachments-only.js.
+	 * @todo Set media library tab title via JavaScript in attachments-only.js?
 	 *
 	 * @since 0.0.1
 	 *
@@ -149,6 +148,7 @@ class Attachments_Only {
 			return $strings;
 		}
 		$strings['mediaLibraryTitle'] = $this->options['media_library_title'];
+		$strings['done'] = $this->options['media_library_button_title'];
 		return $strings;
 	}
 
@@ -180,22 +180,12 @@ class Attachments_Only {
 			self::VERSION,
 			true
 		);
-
-		wp_localize_script(
-			'attachments-only',
-			'attachmentsOnlyVars',
-			array(
-				'element' => '#insert-media-button-attachments-only',
-				'media_library_title' => $this->options['media_library_title'],
-				'media_library_tab_title' => $this->options['media_library_tab_title'], // Unused, for future reference.
-			)
-		);
 	}
 
 	/**
 	 * Prevent uploading files by dragging them on the post editor.
 	 *
-	 * @todo Open our own media view in stead of preventing to open the default one by this silly hack.
+	 * @todo Open our own media view in stead of preventing to open the default one.
 	 *
 	 * @since 0.0.2
 	 * @return null
