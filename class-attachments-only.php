@@ -51,9 +51,6 @@ class Attachments_Only {
 
 		$this->options = apply_filters( 'attachments_only_options', $defaults );
 
-		// Load plugin text domain.
-		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
-
 		// Remove default 'Add Media' button.
 		add_action( 'admin_head', array( $this, 'remove_media_button' ) );
 
