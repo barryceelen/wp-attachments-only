@@ -31,7 +31,7 @@
 					library:  wp.media.query( {
 						uploadedTo: wp.media.view.settings.post.id,
 						orderby: 'menuOrder',
-						order: 'ASC',
+						order: 'ASC'
 					} ),
 					priority: 10
 				} ),
@@ -94,7 +94,7 @@
 				text: wp.media.view.l10n.done
 			});
 		}
-	}
+	};
 	$(document).ready( function() {
 		attachmentsOnly.init();
 	});
