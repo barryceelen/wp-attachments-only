@@ -46,7 +46,7 @@ class Attachments_Only {
 			'media_button_label' => esc_html__( 'Attachments', 'attachments-only' ),
 			'media_library_title' => esc_html__( 'Attachments', 'attachments-only' ),
 			'media_library_tab_title' => esc_html__( 'Attachments', 'attachments-only' ),
-			'media_library_button_title' => esc_html__( 'Done', 'attachments-only' ),
+			'media_library_button_title' => esc_html__( 'Close', 'attachments-only' ),
 		);
 
 		$this->options = apply_filters( 'attachments_only_options', $defaults );
