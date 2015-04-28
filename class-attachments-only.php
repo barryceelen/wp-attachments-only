@@ -1,18 +1,18 @@
 <?php
 /**
- * Attachments Only.
- *
- * @package   Attachments_Only
- * @author    Barry Ceelen <b@rryceelen.com>
- * @license   GPL-2.0+
- * @link      https://github.com/barryceelen/wp-attachments-only
- * @copyright 2015 Barry Ceelen
- */
+* Attachments Only.
+*
+* @package   Attachments_Only
+* @author    Barry Ceelen <b@rryceelen.com>
+* @license   GPL-2.0+
+* @link      https://github.com/barryceelen/wp-attachments-only
+* @copyright 2015 Barry Ceelen
+*/
 
 /**
- * @package Attachments_Only
- * @author  Barry Ceelen <b@rryceelen.com>
- */
+* @package Attachments_Only
+* @author  Barry Ceelen <b@rryceelen.com>
+*/
 class Attachments_Only {
 
 	/**
@@ -93,13 +93,12 @@ class Attachments_Only {
 	 *
 	 * @since 0.0.1
 	 */
-	public function load_plugin_textdomain() {
-
-		$domain = 'attachments-only';
-		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
-
-		load_textdomain( $domain, trailingslashit( WP_LANG_DIR ) . $domain . '/' . $domain . '-' . $locale . '.mo' );
-		load_plugin_textdomain( $domain, FALSE, basename( plugin_dir_path( dirname( __FILE__ ) ) ) . '/languages/' );
+	public static function load_plugin_textdomain() {
+		load_plugin_textdomain(
+			'attachments-only',
+			false,
+			dirname( plugin_basename( __FILE__ ) ) . '/languages'
+		);
 	}
 
 	/**
