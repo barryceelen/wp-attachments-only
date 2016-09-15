@@ -10,7 +10,7 @@
  */
 
 /**
- * Main plugin class
+ * Main plugin class.
  *
  * @since 0.0.1
  */
@@ -24,7 +24,7 @@ class Attachments_Only {
 	 *
 	 * @var string
 	 */
-	const VERSION = '0.0.3';
+	const VERSION = '0.0.4';
 
 	/**
 	 * Instance of this class.
