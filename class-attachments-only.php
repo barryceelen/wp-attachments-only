@@ -87,20 +87,6 @@ class Attachments_Only {
 	}
 
 	/**
-	 * Load the plugin text domain for translation.
-	 *
-	 * @since 0.0.1
-	 */
-	public static function load_plugin_textdomain() {
-
-		load_plugin_textdomain(
-			'attachments-only',
-			false,
-			dirname( plugin_basename( __FILE__ ) ) . '/languages'
-		);
-	}
-
-	/**
 	 * Remove the default 'Add Media' button.
 	 *
 	 * @since 0.0.1
