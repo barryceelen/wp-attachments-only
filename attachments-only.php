@@ -8,7 +8,6 @@
  * @link      https://github.com/barryceelen/wp-attachments-only
  * @copyright 2015 Barry Ceelen
  *
- * @wordpress-plugin
  * Plugin Name:       Attachments Only
  * Plugin URI:        https://github.com/barryceelen/wp-attachments-only
  * Description:       Simplify the default WordPress media view by removing all functionality except adding and deleting attachments.
