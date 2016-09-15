@@ -1,12 +1,13 @@
 <?php
 /**
- * Attachments Only.
+ * Attachments Only
  *
- * @package   Attachments_Only
- * @author    Barry Ceelen <b@rryceelen.com>
- * @license   GPL-3.0+
- * @link      https://github.com/barryceelen/wp-attachments-only
- * @copyright 2015 Barry Ceelen
+ * @package    WordPress
+ * @subpackage Attachments_Only
+ * @author     Barry Ceelen <b@rryceelen.com>
+ * @license    GPL-3.0+
+ * @link       https://github.com/barryceelen/wp-attachments-only
+ * @copyright  2015 Barry Ceelen
  *
  * Plugin Name:       Attachments Only
  * Plugin URI:        https://github.com/barryceelen/wp-attachments-only
