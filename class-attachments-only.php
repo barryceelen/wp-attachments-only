@@ -189,6 +189,7 @@ class Attachments_Only {
 	 * @todo Open our own media view in stead of preventing to open the default one.
 	 *
 	 * @since 0.0.3
+	 *
 	 * @param  array  $settings  Array of editor arguments {@see _WP_Editors::parse_settings()}.
 	 * @param  string $editor_id ID for the current editor instance.
 	 * @return array Filtered arguments array.
