@@ -4,8 +4,8 @@ Tags: attachments, admin, upload, media view
 Requires at least: 3.5
 Tested up to: 4.1.1
 Stable tag: trunk
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License: GPLv3 or later
+License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Simplify the default WordPress media view by removing all functionality except adding, deleting and rearranging attachments.
 
