@@ -98,7 +98,7 @@ class Attachments_Only {
 			return;
 		}
 
-		if ( ! $this->is_supported_post_type( $post->post_type ) ) {
+		if ( ! post_type_supports( $post->post_type, 'attachments_only' ) ) {
 			return;
 		}
 
@@ -114,7 +114,7 @@ class Attachments_Only {
 
 		global $post;
 
-		if ( $this->is_supported_post_type( $post->post_type ) ) {
+		if ( post_type_supports( $post->post_type, 'attachments_only' ) ) {
 			printf(
 				'<a href"#" id="insert-media-button-attachments-only" class="button add_media"  title="%s"><span class="wp-media-buttons-icon"></span> %s</a>',
 				esc_attr( apply_filters( 'attachments_only_media_button_label', __( 'Attachments', 'attachments-only' ) ) ),
@@ -141,7 +141,7 @@ class Attachments_Only {
 			return $strings;
 		}
 
-		if ( ! $this->is_supported_post_type( $post->post_type ) ) {
+		if ( ! post_type_supports( $post->post_type, 'attachments_only' ) ) {
 			return $strings;
 		}
 
@@ -166,7 +166,7 @@ class Attachments_Only {
 
 		global $post;
 
-		if ( ! $this->is_supported_post_type( $post->post_type ) ) {
+		if ( ! post_type_supports( $post->post_type, 'attachments_only' ) ) {
 			return;
 		}
 
@@ -201,7 +201,7 @@ class Attachments_Only {
 			return;
 		}
 
-		if ( ! $this->is_supported_post_type( $post->post_type ) ) {
+		if ( ! post_type_supports( $post->post_type, 'attachments_only' ) ) {
 			return;
 		}
 
@@ -210,29 +210,5 @@ class Attachments_Only {
 		}
 
 		return $settings;
-	}
-
-	/**
-	 * Get post types which support the 'attachments_only' feature.
-	 *
-	 * Use only after or late in the 'init' action as that is where post types and their features should be registered.
-	 *
-	 * @return array List of supported post types.
-	 */
-	private function get_supported_post_types() {
-		global $_wp_post_type_features;
-		return array_keys( wp_filter_object_list( $_wp_post_type_features, array( 'attachments_only' => true ) ) );
-	}
-
-	/**
-	 * Is the post type supported?
-	 *
-	 * Use only after or late in the 'init' action as that is where post types and their features should be registered.
-	 *
-	 * @param  string $post_type Post type.
-	 * @return bool True if supported, else false.
-	 */
-	private function is_supported_post_type( $post_type ) {
-		return in_array( $post_type, $this->get_supported_post_types(), true );
 	}
 }
