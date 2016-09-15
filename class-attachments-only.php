@@ -1,18 +1,19 @@
 <?php
 /**
-* Attachments Only.
-*
-* @package   Attachments_Only
-* @author    Barry Ceelen <b@rryceelen.com>
-* @license   GPL-2.0+
-* @link      https://github.com/barryceelen/wp-attachments-only
-* @copyright 2015 Barry Ceelen
-*/
+ * Contains the main plugin class
+ *
+ * @package   Attachments_Only
+ * @author    Barry Ceelen <b@rryceelen.com>
+ * @license   GPL-2.0+
+ * @link      https://github.com/barryceelen/wp-attachments-only
+ * @copyright 2015 Barry Ceelen
+ */
 
 /**
-* @package Attachments_Only
-* @author  Barry Ceelen <b@rryceelen.com>
-*/
+ * Main plugin class
+ *
+ * @since 0.0.1
+ */
 class Attachments_Only {
 
 	/**
@@ -65,8 +66,6 @@ class Attachments_Only {
 	 * Add actions and filters.
 	 *
 	 * @since 0.0.3
-	 *
-	 * @access private
 	 */
 	private function add_actions_and_filters() {
 		// Remove default 'Add Media' button.
@@ -76,28 +75,26 @@ class Attachments_Only {
 		add_action( 'media_buttons', array( $this, 'the_media_button' ) );
 
 		// Rename media frame label.
-		add_filter( 'media_view_strings', array( $this, 'filter_media_view_strings') );
+		add_filter( 'media_view_strings', array( $this, 'filter_media_view_strings' ) );
 
 		// Enqueue JavaScript.
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 
 		// Until this plugin replaces the default behaviour, prevent uploading files by
 		// dragging them on to the editor by hiding .uploader-editor.
-		add_filter( 'wp_editor_settings', array( $this, 'filter_wp_editor_settings'), 10, 2 );
+		add_filter( 'wp_editor_settings', array( $this, 'filter_wp_editor_settings' ), 10, 2 );
 	}
 
 	/**
 	 * Remove the default 'Add Media' button.
 	 *
 	 * @since 0.0.1
-	 *
-	 * @access private
 	 */
 	public function remove_media_button() {
 
 		global $post, $pagenow;
 
-		if ( ! in_array( $pagenow, array( 'post.php','post-new.php' ) ) ) {
+		if ( ! in_array( $pagenow, array( 'post.php', 'post-new.php' ), true ) ) {
 			return;
 		}
 
@@ -112,8 +109,6 @@ class Attachments_Only {
 	 * Add our own 'Add Media' button to post edit screen.
 	 *
 	 * @since 0.0.1
-	 *
-	 * @access private
 	 */
 	public function the_media_button() {
 
@@ -135,7 +130,6 @@ class Attachments_Only {
 	 *
 	 * @since 0.0.1
 	 *
-	 * @access private
 	 * @param  array $strings Default strings.
 	 * @return array
 	 */
@@ -143,7 +137,7 @@ class Attachments_Only {
 
 		global $post, $pagenow;
 
-		if ( ! in_array( $pagenow, array( 'post.php','post-new.php' ) ) ) {
+		if ( ! in_array( $pagenow, array( 'post.php', 'post-new.php' ), true ) ) {
 			return $strings;
 		}
 
@@ -162,11 +156,11 @@ class Attachments_Only {
 	 *
 	 * @since 0.0.1
 	 *
-	 * @access private
+	 * @param string $hook_suffix The current admin page.
 	 */
-	public function enqueue_scripts( $hook ) {
+	public function enqueue_scripts( $hook_suffix ) {
 
-		if ( ! in_array( $hook, array( 'post.php','post-new.php' ) ) ) {
+		if ( ! in_array( $hook_suffix, array( 'post.php', 'post-new.php' ), true ) ) {
 			return;
 		}
 
@@ -195,9 +189,7 @@ class Attachments_Only {
 	 * @todo Open our own media view in stead of preventing to open the default one.
 	 *
 	 * @since 0.0.3
-	 *
-	 * @access private
-	 * @param  array $settings   Array of editor arguments {@see _WP_Editors::parse_settings()}
+	 * @param  array  $settings  Array of editor arguments {@see _WP_Editors::parse_settings()}.
 	 * @param  string $editor_id ID for the current editor instance.
 	 * @return array Filtered arguments array.
 	 */
@@ -205,7 +197,7 @@ class Attachments_Only {
 
 		global $post, $pagenow;
 
-		if ( ! in_array( $pagenow, array( 'post.php','post-new.php' ) ) ) {
+		if ( ! in_array( $pagenow, array( 'post.php', 'post-new.php' ), true ) ) {
 			return;
 		}
 
@@ -213,7 +205,7 @@ class Attachments_Only {
 			return;
 		}
 
-		if ( 'content' == $editor_id ) {
+		if ( 'content' === $editor_id ) {
 			$settings['drag_drop_upload'] = false;
 		}
 
@@ -237,6 +229,7 @@ class Attachments_Only {
 	 *
 	 * Use only after or late in the 'init' action as that is where post types and their features should be registered.
 	 *
+	 * @param  string $post_type Post type.
 	 * @return bool True if supported, else false.
 	 */
 	private function is_supported_post_type( $post_type ) {
