@@ -113,15 +113,22 @@ class Attachments_Only {
 	 */
 	public function the_media_button() {
 
-		global $post;
+		global $post, $pagenow;
 
-		if ( post_type_supports( $post->post_type, 'attachments_only' ) ) {
-			printf(
-				'<a href"#" id="insert-media-button-attachments-only" class="button add_media"  title="%s"><span class="wp-media-buttons-icon"></span> %s</a>',
-				esc_attr( apply_filters( 'attachments_only_media_button_label', __( 'Attachments', 'attachments-only' ) ) ),
-				esc_html( apply_filters( 'attachments_only_media_button_label', __( 'Attachments', 'attachments-only' ) ) )
-			);
+		if ( ! in_array( $pagenow, array( 'post.php', 'post-new.php' ), true ) ) {
+			return;
 		}
+
+		if ( ! post_type_supports( $post->post_type, 'attachments_only' ) ) {
+			return;
+		}
+
+		printf(
+			'<a href"#" id="insert-media-button-attachments-only" class="button add_media"  title="%s"><span class="wp-media-buttons-icon"></span> %s</a>',
+			esc_attr( apply_filters( 'attachments_only_media_button_label', __( 'Attachments', 'attachments-only' ) ) ),
+			esc_html( apply_filters( 'attachments_only_media_button_label', __( 'Attachments', 'attachments-only' ) ) )
+		);
+
 	}
 
 	/**
