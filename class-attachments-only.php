@@ -207,11 +207,11 @@ class Attachments_Only {
 		global $post, $pagenow;
 
 		if ( ! in_array( $pagenow, array( 'post.php', 'post-new.php' ), true ) ) {
-			return;
+			return $settings;
 		}
 
 		if ( ! post_type_supports( $post->post_type, 'attachments_only' ) ) {
-			return;
+			return $settings;
 		}
 
 		if ( 'content' === $editor_id ) {
